@@ -2,17 +2,19 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
+require("dotenv").config();
 
 app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-const connection = mongoose.connect(
-    "mongodb+srv://neil:neil260598@collectapp.joovi.mongodb.net/pollingdb?retryWrites=true&w=majority",
+mongoose.connect(
+    process.env.MONGODB_URI,
     {
       useNewUrlParser: true,
-      useCreateIndex: true
+      useCreateIndex: true,
+      useUnifiedTopology: true
     }
 );
 
