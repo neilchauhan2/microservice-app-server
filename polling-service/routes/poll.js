@@ -7,6 +7,16 @@ const {
 } = require("../controllers/nomination");
 const { createPoll, getPoll } = require("../controllers/poll");
 
+const Pusher = require("pusher");
+
+const pusher = new Pusher({
+  appId: process.env.PUSHER_APPID,
+  key: process.env.PUSHER_KEY,
+  secret: process.env.PUSHER_SECRET,
+  cluster: process.env.PUSHER_CUSTER,
+  useTLS: true
+});
+
 // get poll
 route.get("/poll/:id", async (req, res) => {
     try {
@@ -56,7 +66,12 @@ route.post("/nomination/upvote/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const nomination = await upVote(id);
-        res.send(nomination);
+        pusher.trigger("poll", "vote", {
+            name : nomination.name,
+            count : nomination.count,
+            id : nomination.id 
+          });
+        res.send("Thank you for voting.");
     } catch (error) {
         console.log(error);
     }
@@ -67,7 +82,12 @@ route.post("/nomination/downvote/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const nomination = await downVote(id);
-        res.send(nomination);
+        pusher.trigger("poll", "vote", {
+            name : nomination.name,
+            count : nomination.count,
+            id : nomination.id 
+          });
+        res.send("Your response has been recorded.");
     } catch (error) {
         console.log(error);
     }
