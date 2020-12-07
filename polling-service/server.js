@@ -18,6 +18,8 @@ mongoose.connect(
     }
 );
 
+app.use("/api/polling", require("./routes/poll"));
+
 app.get("/", (req, res) => {
     res.send("<h1> Hello World! </h1>");
 });
