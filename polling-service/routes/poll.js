@@ -31,8 +31,8 @@ route.get("/poll/:id", async (req, res) => {
 // create poll
 route.post("/poll/add", async (req, res) => {
     try {
-        const { name } = req.body;
-        const poll = await createPoll({ name });
+        const { title } = req.body;
+        const poll = await createPoll({ title });
         res.send(poll);
     } catch (error) {
         console.log(error);
@@ -53,8 +53,8 @@ route.get("/nomination/:pollId", async (req, res) => {
 // create nominations
 route.post("/nomination/add", async (req, res) => {
     try {
-        const { name, count, pollId } = req.body;
-        const nomination = await createNomination({ name, count, pollId });
+        const { title, count, pollId } = req.body;
+        const nomination = await createNomination({ title, count, pollId });
         res.send(nomination);
     } catch (error) {
         console.log(error);
@@ -67,7 +67,7 @@ route.post("/nomination/upvote/:id", async (req, res) => {
         const { id } = req.params;
         const nomination = await upVote(id);
         pusher.trigger("poll", "vote", {
-            name : nomination.name,
+            title : nomination.title,
             count : nomination.count,
             id : nomination.id 
           });
@@ -83,7 +83,7 @@ route.post("/nomination/downvote/:id", async (req, res) => {
         const { id } = req.params;
         const nomination = await downVote(id);
         pusher.trigger("poll", "vote", {
-            name : nomination.name,
+            title : nomination.title,
             count : nomination.count,
             id : nomination.id 
           });
