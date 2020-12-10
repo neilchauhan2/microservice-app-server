@@ -23,7 +23,18 @@ const getPoll = async (id) => {
 	}
 }
 
+// get Polls 
+const getPolls = async () => {
+    try {
+        const polls = await Poll.find({});
+        return polls;
+    } catch(e) {
+        console.error(e);    
+    }
+}
+
 module.exports = {
 	createPoll,
-	getPoll
+	getPoll,
+    getPolls 
 };
