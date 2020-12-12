@@ -15,9 +15,6 @@ mongoose.connect(process.env.MONGODB_URI, {
 });
 
 app.use("/api/user", require("./routes/user"));
-app.get("/", (req, res) => {
-  res.send("<h1>Hello World</h1>");
-});
 
 app.listen(8001, () => {
   console.log("Server started at http://localhost:8001");

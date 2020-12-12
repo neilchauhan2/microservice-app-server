@@ -5,6 +5,11 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { createUser, getUser } = require("../controllers/user");
 
+// hello
+route.get("/hello", (req, res) => {
+  res.send("<h1>Hello World</h1>");
+});
+
 // create user
 route.post("/signup", async (req, res) => {
   try {
