@@ -16,10 +16,6 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 app.use("/api/polling", require("./routes/poll"));
 
-app.get("/", (req, res) => {
-  res.send("<h1> Hello World! </h1>");
-});
-
 app.listen(8000, () => {
   console.log("Server started at http://localhost:8000");
 });

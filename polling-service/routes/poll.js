@@ -7,6 +7,11 @@ const {
 } = require("../controllers/nomination");
 const { createPoll, getPoll, getPolls } = require("../controllers/poll");
 
+// hello
+route.get("/hello", (req, res) => {
+  res.send("<h1> Hello World! </h1>");
+});
+
 // get poll
 route.get("/poll/:id", async (req, res) => {
   try {
