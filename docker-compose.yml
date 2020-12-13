@@ -5,15 +5,15 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - MONGODB_URI=mongodb+srv://neil:neil260598@collectapp.joovi.mongodb.net/pollingdb?retryWrites=true&w=majority
+      - MONGODB_URI=<enter_mongo_uri>
 
   user-service:
     build: "./user-service"
     ports:
       - "8001:8000"
     environment:
-      - MONGODB_URI=mongodb+srv://neil:neil260598@collectapp.joovi.mongodb.net/pollingdb?retryWrites=true&w=majority
-      - JWT_SECRET=miCroSerViCeAppSe!@3423Rvice
+      - MONGODB_URI=<enter_mongo_uri>
+      - JWT_SECRET=<enter_jwt_secret>
 
   nginx:
     image: nginx:latest
