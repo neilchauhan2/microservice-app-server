@@ -27,4 +27,4 @@ Run the following command to start the services.
 
 #### `docker-compose up`
 
-#### For the client side code [click here](https://github.com/neilchauhan2/microservice-app-client, "click here").
+#### For the client side code [click here](https://github.com/neilchauhan2/microservice-app-client "click here").
