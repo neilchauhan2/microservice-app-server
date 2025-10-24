@@ -28,7 +28,7 @@ jobs:
       - name: Set up NodeJS
         uses: actions/setup-node@v3
         with:
-          node-version: "22-slim"
+          node-version: "22"
           cache: "npm"
 
       - name: Install dependencies
