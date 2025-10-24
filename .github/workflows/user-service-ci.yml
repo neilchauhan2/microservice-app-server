@@ -64,7 +64,7 @@ jobs:
           file: ./user-service/Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/user-service:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/user-service:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-user-service:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-user-service:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
