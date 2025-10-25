@@ -68,3 +68,27 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-user-service:${{ github.run_number }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Checkout Manifests
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.POLLAPP_PAT }}
+
+      - name: Update K8s manifests with new image tag
+        run: |
+          IMAGE_TAG=${{ github.run_number }}
+          echo "Updating deployment manifest to use image tag: ${IMAGE_TAG}"
+          sed -i "s|image: ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-user-service:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-user-service:${IMAGE_TAG}|g" kubernetes/user-service-deployment.yaml
+
+      - name: Commit and Push updated manifests
+        run: |
+          git config --global user.name 'GitHub Actions Bot'
+          git config --global user.email 'actions-bot@github.com'
+          git add kubernetes/user-service-deployment.yaml
+          if git diff --staged --quiet; then
+            echo "No manifest changes detected."
+          else
+            echo "Committing and pushing manifest changes..."
+            git commit -m "Update user-service image to build #${{ github.run_number }}" 
+            git push
+          fi
