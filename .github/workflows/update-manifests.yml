@@ -1,0 +1,59 @@
+name: Update Kubernetes Manifests
+
+on:
+  workflow_run:
+    workflows: ["Polling Service CI", "User Service CI"]
+    types:
+      - completed
+    branches:
+      - master
+
+jobs:
+  update-manifests:
+    name: Update K8s Manifests with New Image Tags
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.POLLAPP_PAT }}
+          fetch-depth: 0
+
+      - name: Pull latest changes
+        run: |
+          git pull origin master
+
+      - name: Get workflow information
+        id: workflow-info
+        run: |
+          echo "workflow_name=${{ github.event.workflow_run.name }}" >> $GITHUB_OUTPUT
+          echo "run_number=${{ github.event.workflow_run.run_number }}" >> $GITHUB_OUTPUT
+
+      - name: Update Polling Service manifest
+        if: contains(github.event.workflow_run.name, 'Polling Service')
+        run: |
+          IMAGE_TAG=${{ steps.workflow-info.outputs.run_number }}
+          echo "Updating polling-service deployment manifest to use image tag: ${IMAGE_TAG}"
+          sed -i "s|image: ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-polling-service:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-polling-service:${IMAGE_TAG}|g" kubernetes/polling-service-deployment.yaml
+
+      - name: Update User Service manifest
+        if: contains(github.event.workflow_run.name, 'User Service')
+        run: |
+          IMAGE_TAG=${{ steps.workflow-info.outputs.run_number }}
+          echo "Updating user-service deployment manifest to use image tag: ${IMAGE_TAG}"
+          sed -i "s|image: ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-user-service:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-user-service:${IMAGE_TAG}|g" kubernetes/user-service-deployment.yaml
+
+      - name: Commit and Push updated manifests
+        run: |
+          git config --global user.name 'GitHub Actions Bot'
+          git config --global user.email 'actions-bot@github.com'
+          git add kubernetes/
+          if git diff --staged --quiet; then
+            echo "No manifest changes detected."
+          else
+            echo "Committing and pushing manifest changes..."
+            git commit -m "Update Polling and User Service images to build #${{ steps.workflow-info.outputs.run_number }}"
+            git push origin master
+          fi
