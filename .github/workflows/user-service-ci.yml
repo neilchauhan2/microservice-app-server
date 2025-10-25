@@ -144,6 +144,6 @@ jobs:
             echo "No manifest changes detected."
           else
             echo "Committing manifest update..."
-            git commit -m "Update User Service image to build #${{ github.run_number }} [skip ci]"
+            git commit -m "Update User Service image to build #${{ github.run_number }}"
             git push origin master
           fi
