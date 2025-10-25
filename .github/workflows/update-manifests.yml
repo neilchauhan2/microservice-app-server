@@ -48,6 +48,6 @@ jobs:
             echo "No manifest changes detected."
           else
             echo "Committing and pushing manifest changes..."
-            git commit -m "Update Polling and User Service images to build #${{ steps.workflow-info.outputs.run_number }}"
+            git commit -m "Update Polling and User Service images with tag #${{ steps.workflow-info.outputs.run_number }}"
             git push origin master
           fi
