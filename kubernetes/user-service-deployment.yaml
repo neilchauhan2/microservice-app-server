@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: user-service
-          image: neilchauhan2/pollapp-user-service:20
+          image: neilchauhan2/pollapp-user-service:21
           ports:
             - containerPort: 8001
           envFrom:
