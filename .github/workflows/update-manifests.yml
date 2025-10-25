@@ -37,12 +37,6 @@ jobs:
           IMAGE_TAG=${{ steps.workflow-info.outputs.run_number }}
           echo "Updating polling-service deployment manifest to use image tag: ${IMAGE_TAG}"
           sed -i "s|image: ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-polling-service:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-polling-service:${IMAGE_TAG}|g" kubernetes/polling-service-deployment.yaml
-
-      - name: Update User Service manifest
-        if: contains(github.event.workflow_run.name, 'User Service')
-        run: |
-          IMAGE_TAG=${{ steps.workflow-info.outputs.run_number }}
-          echo "Updating user-service deployment manifest to use image tag: ${IMAGE_TAG}"
           sed -i "s|image: ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-user-service:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-user-service:${IMAGE_TAG}|g" kubernetes/user-service-deployment.yaml
 
       - name: Commit and Push updated manifests
