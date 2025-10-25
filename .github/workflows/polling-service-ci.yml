@@ -65,6 +65,6 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-polling-service:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-polling-service:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-polling-service:${{ github.run_number }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
