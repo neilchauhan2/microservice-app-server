@@ -31,12 +31,18 @@ jobs:
           echo "workflow_name=${{ github.event.workflow_run.name }}" >> $GITHUB_OUTPUT
           echo "run_number=${{ github.event.workflow_run.run_number }}" >> $GITHUB_OUTPUT
 
-      - name: Update Polling and User Service manifest
+      - name: Update Polling Service manifest
         if: contains(github.event.workflow_run.name, 'Polling Service')
         run: |
           IMAGE_TAG=${{ steps.workflow-info.outputs.run_number }}
           echo "Updating polling-service deployment manifest to use image tag: ${IMAGE_TAG}"
           sed -i "s|image: ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-polling-service:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-polling-service:${IMAGE_TAG}|g" kubernetes/polling-service-deployment.yaml
+
+      - name: Update User Service manifest
+        if: contains(github.event.workflow_run.name, 'User Service')
+        run: |
+          IMAGE_TAG=${{ steps.workflow-info.outputs.run_number }}
+          echo "Updating user-service deployment manifest to use image tag: ${IMAGE_TAG}"
           sed -i "s|image: ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-user-service:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/pollapp-user-service:${IMAGE_TAG}|g" kubernetes/user-service-deployment.yaml
 
       - name: Commit and Push updated manifests
@@ -48,6 +54,6 @@ jobs:
             echo "No manifest changes detected."
           else
             echo "Committing and pushing manifest changes..."
-            git commit -m "Update Polling and User Service images with tag #${{ steps.workflow-info.outputs.run_number }}"
+            git commit -m "Update Polling and User Service images to build #${{ steps.workflow-info.outputs.run_number }}"
             git push origin master
           fi
