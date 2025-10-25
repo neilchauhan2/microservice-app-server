@@ -6,11 +6,15 @@ on:
     paths:
       - "user-service/**"
       - ".github/workflows/user-service-ci.yml"
+      - ".github/workflows/update-manifests.yml"
+      - "kubernetes/**"
   pull_request:
     branches: [master]
     paths:
       - "user-service/**"
       - ".github/workflows/user-service-ci.yml"
+      - ".github/workflows/update-manifests.yml"
+      - "kubernetes/**"
 
 jobs:
   test:

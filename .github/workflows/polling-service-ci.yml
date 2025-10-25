@@ -6,11 +6,15 @@ on:
     paths:
       - "polling-service/**"
       - ".github/workflows/polling-service-ci.yml"
+      - ".github/workflows/update-manifests.yml"
+      - "kubernetes/**"
   pull_request:
     branches: [master]
     paths:
       - "polling-service/**"
       - ".github/workflows/polling-service-ci.yml"
+      - ".github/workflows/update-manifests.yml"
+      - "kubernetes/**"
 
 jobs:
   test:
