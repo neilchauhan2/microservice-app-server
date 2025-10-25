@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: polling-service
-          image: neilchauhan2/pollapp-polling-service:11
+          image: neilchauhan2/pollapp-polling-service:12
           ports:
             - containerPort: 8000
           envFrom:
