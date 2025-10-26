@@ -18,7 +18,8 @@ spec:
           ports:
             - containerPort: 8001
           envFrom:
-            - secretRef: microservice-secrets
+            - secretRef:
+              name: microservice-secrets
           env:
             - name: PORT
               value: "8001"

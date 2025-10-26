@@ -13,22 +13,23 @@ spec:
       labels:
         app: mongodb
     spec:
-    containers:
-      - name: mongodb
-        image: mongo:5.0
-        ports:
-          - containerPort: 27017
-            name: mongodb
-        envFrom:
-          - secretRef: microservice-secrets
-        volumeMounts:
-          - name: mongodb-persistent-storage
-            mountPath: /data/db
+      containers:
+        - name: mongodb
+          image: mongo:5.0
+          ports:
+            - containerPort: 27017
+              name: mongodb
+          envFrom:
+            - secretRef:
+                name: microservice-secrets
+          volumeMounts:
+            - name: mongodb-persistent-storage
+              mountPath: /data/db
   volumeClaimTemplates:
     - metadata:
         name: mongodb-persistent-storage
       spec:
-        accessMode: ["ReadWriteOnce"]
-        resource:
+        accessModes: ["ReadWriteOnce"]
+        resources:
           requests:
             storage: 1Gi
