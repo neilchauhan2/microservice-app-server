@@ -350,12 +350,12 @@ Trigger → Test → Build → Deploy to Vercel
 
 ### Key Pipeline Features
 
-✅ **Automated Testing**: All tests must pass before deployment
-✅ **Docker Layer Caching**: Faster builds with GitHub Actions cache
-✅ **Semantic Versioning**: Images tagged with build numbers
-✅ **Concurrency Control**: Prevents race conditions in manifest updates
-✅ **Automatic Rollback**: Failed deployments trigger alerts
-✅ **Environment Separation**: Different configs for dev/staging/prod
+- ✅ **Automated Testing**: All tests must pass before deployment
+- ✅ **Docker Layer Caching**: Faster builds with GitHub Actions cache
+- ✅ **Semantic Versioning**: Images tagged with build numbers
+- ✅ **Concurrency Control**: Prevents race conditions in manifest updates
+- ✅ **Automatic Rollback**: Failed deployments trigger alerts
+- ✅ **Environment Separation**: Different configs for dev/staging/prod
 
 ### Workflow Synchronization
 
@@ -364,48 +364,7 @@ To handle concurrent updates, the User Service workflow includes:
 - Wait mechanism (up to 10 minutes)
 - Sequential manifest updates
 - Conflict prevention
-
----
-
-## 📊 Monitoring & Observability
-
-### Application Health Checks
-
-**Health Endpoints:**
-- `/api/polling/hello` - Polling service health
-- `/api/user/hello` - User service health
-
-![Application Working](app-polling-hello.png)
-*Image 5: Polling service /hello endpoint returning "Hello World!"*
-
-![User Service Working](app-user-hello.png)
-*Image 6: User service /hello endpoint confirming service availability*
-
-### Kubernetes Monitoring
-
-**Pod Health Metrics:**
-- Ready status for all pods
-- Restart counts
-- Resource utilization
-- Age and uptime
-
-**Service Monitoring:**
-- LoadBalancer external IP allocation
-- ClusterIP assignments
-- Port mappings
-- Service discovery
-
-### Logging Strategy
-
-```bash
-# View service logs
-kubectl logs -f deployment/polling-service
-kubectl logs -f deployment/user-service
-
-# View ArgoCD sync logs
-kubectl logs -f -n argocd deployment/argocd-application-controller
-```
-
+  
 ---
 
 ## 📚 Lessons Learned
@@ -434,21 +393,12 @@ kubectl logs -f -n argocd deployment/argocd-application-controller
 
 ### Best Practices Adopted
 
-✅ Infrastructure as Code for reproducibility
-✅ Automated testing in CI pipeline
-✅ Container image versioning
-✅ Health checks for all services
-✅ Secrets management
-✅ Documentation as code
-
----
-
-## 📞 Contact
-
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
-- Email: your.email@example.com
+- ✅ Infrastructure as Code for reproducibility
+- ✅ Automated testing in CI pipeline
+- ✅ Container image versioning
+- ✅ Health checks for all services
+- ✅ Secrets management
+- ✅ Documentation as code
 
 ---
 
